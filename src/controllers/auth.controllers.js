@@ -78,32 +78,52 @@ export const register = async (req, res) => {
   }
 };
 
-export const logout = async (req, res) => {
-  res.cookie("token", "");
-  return res.status(200).json({ message: "Token eliminado" });
-};
-
 export const verifyToken = async (req, res) => {
   const { token } = req.cookies;
 
-  if (!token) {
-    return res.send(false);
-  }
+  if (!token) return res.status(401).json({ message: "Token no autorizado" });
 
-  jwt.verify(token, TOKEN_SECRET, async (error, user) => {
-    if (error) return res.sendStatus(401);
+  jwt.verify(token, TOKEN_SECRET, async (err, user) => {
+    if (err) return res.status(401).json({ message: "Token no autorizado" });
 
-    const userFound = await User.findOne(user.id);
+    const userFound = await User.findById(user.id);
+    if (!userFound)
+      return res
+        .status(401)
+        .json({ message: "No se ha encontrado el usuario" });
+
+    return res.json({
+      id: userFound._id,
+      username: userFound.username,
+      email: userFound.email,
+    });
+  });
+};
+
+export const profile = async (req, res) => {
+  try {
+    const userFound = await User.findById(req.user.id);
 
     if (!userFound) {
-      return res.sendStatus(401);
+      res.status(400).json({ message: "Usuario no encontrado" });
     }
 
     return res.json({
       id: userFound._id,
       username: userFound.username,
       email: userFound.email,
-      fullname: userFound.username,
+      fullname: userFound.fullname,
     });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+};
+
+export const logout = async (req, res) => {
+  res.cookie("token", "", {
+    expires: new Date(0),
+    httpOnly: true,
+    secure: true,
   });
+  return res.sendStatus(200);
 };
