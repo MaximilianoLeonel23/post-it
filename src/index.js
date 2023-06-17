@@ -1,14 +1,13 @@
 import app from "./app.js";
 import { connectDB } from "./database.js";
-
-const port = 4000;
+import { PORT } from "./config.js";
 
 const main = async () => {
   try {
     await connectDB();
     console.log("Connected to DB");
-    app.listen(port);
-    console.log("Server on port", port);
+    app.listen(PORT);
+    console.log("Server on port", PORT);
   } catch (error) {
     console.log(error);
   }

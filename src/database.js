@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
-const URI = "mongodb://127.0.0.1/post-it-app";
+import { MONGODB_URI } from "./config.js";
 
 export const connectDB = async () => {
   try {
-    await mongoose.connect(URI);
+    await mongoose.connect(MONGODB_URI);
   } catch (error) {
     console.log(error);
   }
