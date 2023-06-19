@@ -11,18 +11,17 @@ export const login = async (req, res) => {
     const userFound = await User.findOne({ email });
 
     if (!userFound) {
-      return res.json({ message: "El email no existe" });
+      return res.status(400).res.json({ message: "El email no existe" });
     }
 
     const isMatch = await bcrypt.compare(password, userFound.password);
 
     if (!isMatch) {
-      return res.json({ message: "La contraseña es inválida" });
+      return res.status(400).json({ message: "La contraseña es inválida" });
     }
 
     const token = await createAccessToken({
       id: userFound._id,
-      username: userFound.username,
     });
 
     res.cookie("token", token);
@@ -66,7 +65,10 @@ export const register = async (req, res) => {
     // Creo el token
     const token = await createAccessToken({ id: savedUser._id });
 
-    res.cookie("token", token);
+    res.cookie("token", token, {
+      secure: true,
+      sameSite: "none",
+    });
     res.json({
       id: savedUser._id,
       username: savedUser.username,
