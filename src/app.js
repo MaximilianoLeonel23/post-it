@@ -14,7 +14,7 @@ app.use(
 );
 app.use(cookieParser());
 
-app.use("/api/auth", authRouter);
+app.use("/api", authRouter);
 app.use("/api", postitRouter);
 
 export default app;
