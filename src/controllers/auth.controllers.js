@@ -81,7 +81,7 @@ export const register = async (req, res) => {
 export const verifyToken = async (req, res) => {
   const { token } = req.cookies;
 
-  if (!token) return res.status(401).json({ message: "Token no autorizado" });
+  if (!token) return res.send(false);
 
   jwt.verify(token, TOKEN_SECRET, async (err, user) => {
     if (err) return res.status(401).json({ message: "Token no autorizado" });
@@ -96,6 +96,7 @@ export const verifyToken = async (req, res) => {
       id: userFound._id,
       username: userFound.username,
       email: userFound.email,
+      fullname: userFound.fullname,
     });
   });
 };
