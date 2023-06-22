@@ -4,7 +4,7 @@ export const createPostItSchema = z.object({
   title: z.string().default(""),
   content: z
     .string({
-      required_error: "El contenido es requerido",
+      required_error: "Content is required",
     })
     .nonempty(),
   tags: z.array(z.string()).default([]),

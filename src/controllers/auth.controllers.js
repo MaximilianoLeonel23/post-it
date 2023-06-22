@@ -12,7 +12,7 @@ export const register = async (req, res) => {
     const userFound = await User.findOne({ email });
 
     if (userFound) {
-      return res.status(400).json(["The email already exists"]);
+      return res.status(400).json("The email already exists");
     }
 
     // Encrptar contraseña
@@ -51,13 +51,13 @@ export const login = async (req, res) => {
     const userFound = await User.findOne({ email });
 
     if (!userFound) {
-      return res.status(400).res.json({ message: "El email no existe" });
+      return res.status(400).res.json("The email doesn't exist");
     }
 
     const isMatch = await bcrypt.compare(password, userFound.password);
 
     if (!isMatch) {
-      return res.status(400).json(["Invalid password"]);
+      return res.status(400).json("Invalid password");
     }
 
     const token = await createAccessToken({
@@ -89,7 +89,7 @@ export const profile = async (req, res) => {
   const userFound = await User.findById(req.user.id);
 
   if (!userFound) {
-    res.status(400).json({ message: "Usuario no encontrado" });
+    res.status(400).json("User not found");
   }
 
   return res.json({
