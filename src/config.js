@@ -8,5 +8,4 @@ export const MONGODB_URI =
   process.env.MONGODB_URI ||
   `mongodb+srv://maximiliano:${process.env.MONGODB_PASSWORD}@cluster0.ulu4jdk.mongodb.net/post-it-app?retryWrites=true&w=majority`;
 
-export const FRONTEND_URL =
-  process.env.FRONTEND_URL || process.env.LOCALHOST_URL;
+export const FRONTEND_URL = process.env.FRONTEND_URL;
