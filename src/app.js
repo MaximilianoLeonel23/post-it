@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser";
 const app = express();
 
 const corsOptions = {
-  origin: "https://post-it-app-gilt.vercel.app",
+  origin: ["https://post-it-app-gilt.vercel.app"],
   credentials: true,
 };
 
