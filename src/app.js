@@ -5,7 +5,12 @@ import postitRouter from "./routes/postit.router.js";
 import cookieParser from "cookie-parser";
 const app = express();
 
-app.use(cors());
+const corsOptions = {
+  origin: "https://post-it-app-gilt.vercel.app",
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use(cookieParser());
