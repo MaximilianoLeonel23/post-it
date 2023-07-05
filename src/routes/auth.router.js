@@ -17,5 +17,8 @@ router.post("/register", validateSchema(registerSchema), register);
 router.post("/logout", logout);
 router.get("/profile", authRequired, profile);
 router.get("/verify", verifyToken);
+router.get("/test", (req, res) => {
+  res.json({ test: "Aprobado" });
+});
 
 export default router;
