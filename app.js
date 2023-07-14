@@ -14,8 +14,8 @@ app.use(cookieParser());
 // Configurar CORS
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://post-it-app-gilt.vercel.app"], // Reemplaza con el origen de tu aplicación cliente
-    credentials: true, // Habilita el intercambio de cookies
+    origin: "https://post-it-app-gilt.vercel.app",
+    credentials: true,
   })
 );
 
